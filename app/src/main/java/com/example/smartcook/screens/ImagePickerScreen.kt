@@ -36,6 +36,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.smartcook.data.ImagePickerViewModel
+import com.example.smartcook.screens.navigation.Screen
 
 @Composable
 fun ImagePickerScreen(navController: NavController, model: ImagePickerViewModel = viewModel()){
@@ -59,7 +60,7 @@ fun ImagePickerScreen(navController: NavController, model: ImagePickerViewModel 
         selectedImageBitmap = bitmap
         if (bitmap != null) {
             model.setSelectedImage(bitmap)
-            navController.navigate("imagePicker")
+            navController.navigate(Screen.ImagePicker.route)
         }
     }
 

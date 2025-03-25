@@ -8,14 +8,17 @@ import androidx.navigation.NavController
 import com.example.smartcook.components.RecipeListScreen
 import com.example.smartcook.data.ItemViewModel
 import com.example.smartcook.data.RecipePreviewData
+import com.example.smartcook.screens.navigation.Screen
 
 @Composable
 fun HomeScreen(navController: NavController, itemViewModel: ItemViewModel) {
     val recipes = itemViewModel.recipes.collectAsState().value
 
+
     RecipeListScreen(
         recipes = recipes,
-        onClick = { navController.navigate("fullRecipe/${it.id}") },
+        onClick = { recipe: RecipePreviewData ->
+            navController.navigate(Screen.FullRecipe.withId(recipe.id)) },
         onToggleFavorite = { itemViewModel.toggleFavorite(it) }
     )
 }

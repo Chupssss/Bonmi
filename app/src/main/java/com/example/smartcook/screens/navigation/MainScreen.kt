@@ -43,7 +43,7 @@ fun MainScreen(navController: NavController, itemViewModel: ItemViewModel) {
     Scaffold (
         Modifier.fillMaxSize(),
         floatingActionButton = {
-            FloatingActionButton(onClick = { navController.navigate("imagePicker") },modifier = Modifier
+            FloatingActionButton(onClick = { navController.navigate(Screen.ImagePicker.route) },modifier = Modifier
                 .padding(10.dp)) {
                 Icon(painter = painterResource(id = R.drawable.photo_camera_24px), contentDescription = null)
             }

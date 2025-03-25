@@ -6,9 +6,11 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material3.Text
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.smartcook.data.ItemViewModel
 import com.example.smartcook.screens.FavoriteRecipesScreen
 import com.example.smartcook.screens.FullScreenRecipe
@@ -39,8 +41,11 @@ class MainActivity : ComponentActivity() {
                     composable(Screen.ImagePicker.route) {
                         ImagePickerScreen(navController)
                     }
-                    composable(Screen.FullRecipe.route) { backStackEntry ->
-                        val recipeId = backStackEntry.arguments?.getString("recipeId")?.toIntOrNull()
+                    composable(
+                        route = Screen.FullRecipe.route,
+                        arguments = listOf(navArgument("recipeId") { type = NavType.IntType })
+                    ) { backStackEntry ->
+                        val recipeId = backStackEntry.arguments?.getInt("recipeId")
                         if (recipeId != null) {
                             FullScreenRecipe(navController, recipeId, itemViewModel)
                         } else {
