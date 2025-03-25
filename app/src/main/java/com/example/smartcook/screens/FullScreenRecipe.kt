@@ -34,10 +34,13 @@ import com.example.smartcook.data.RecipePreviewData
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FullScreenRecipe( navController: NavController, recipeId: Int, model: ItemViewModel = viewModel()) {
+fun FullScreenRecipe(
+    navController: NavController,
+    recipeId: Int,
+    itemViewModel: ItemViewModel)
+{
 
-    val recipes by model.recipes.collectAsState()
-    val recipe = recipes.find { it.id == recipeId }
+    val recipe = itemViewModel.getRecipeById(recipeId)
 
     if (recipe == null) {
         Text("Рецепт не найден")
@@ -70,7 +73,7 @@ fun FullScreenRecipe( navController: NavController, recipeId: Int, model: ItemVi
             Row(Modifier.fillMaxWidth()) {
                 Text("Заголовок", style = MaterialTheme.typography.headlineLarge)
                 IconButton(onClick = {
-                    model.toggleFavorite(recipe.id)
+                    itemViewModel.toggleFavorite(recipe.id)
                 }) {
                     Icon(
                         painter = painterResource(

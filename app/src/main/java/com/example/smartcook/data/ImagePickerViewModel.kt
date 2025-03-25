@@ -15,4 +15,5 @@ class ImagePickerViewModel: ViewModel() {
         _selectedImage.value = bitmap
     }
 
+
 }

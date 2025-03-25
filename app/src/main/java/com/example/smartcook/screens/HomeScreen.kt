@@ -10,14 +10,12 @@ import com.example.smartcook.data.ItemViewModel
 import com.example.smartcook.data.RecipePreviewData
 
 @Composable
-fun HomeScreen(navController: NavController, model: ItemViewModel = viewModel()) {
-    val recipes = model.recipes.collectAsState().value
+fun HomeScreen(navController: NavController, itemViewModel: ItemViewModel) {
+    val recipes = itemViewModel.recipes.collectAsState().value
 
     RecipeListScreen(
         recipes = recipes,
-        onClick = { recipe: RecipePreviewData ->
-            navController.navigate("fullRecipe/${recipe.id}")
-        },
-        onToggleFavorite = { model.toggleFavorite(it) }
+        onClick = { navController.navigate("fullRecipe/${it.id}") },
+        onToggleFavorite = { itemViewModel.toggleFavorite(it) }
     )
 }

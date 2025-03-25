@@ -9,6 +9,6 @@ object TestObjects {
         RecipePreviewData(id = 2, title = "Пельмени 2", image =  R.drawable.shlepa, false),
         RecipePreviewData(id = 3, title = "Пельмени 3", image =  R.drawable.shlepa, false),
         RecipePreviewData(id = 4, title = "Пельмени 4", image =  R.drawable.shlepa, false),
-        RecipePreviewData(id = 5, title = "Пельмени 5", image =  R.drawable.shlepa, false),
+        RecipePreviewData(id = 5, title = "Пельмени 6", image =  R.drawable.shlepa, false),
     )
 }
