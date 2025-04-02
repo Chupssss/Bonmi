@@ -3,7 +3,6 @@ package com.example.smartcook.screens
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.smartcook.components.RecipeListScreen
 import com.example.smartcook.data.ItemViewModel

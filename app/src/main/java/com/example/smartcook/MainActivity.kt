@@ -36,7 +36,7 @@ class MainActivity : ComponentActivity() {
                         HomeScreen(navController, itemViewModel)
                     }
                     composable(Screen.Favorite.route) {
-                        FavoriteRecipesScreen(itemViewModel)
+                        FavoriteRecipesScreen(navController, itemViewModel)
                     }
                     composable(Screen.ImagePicker.route) {
                         ImagePickerScreen(navController)

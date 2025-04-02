@@ -69,7 +69,7 @@ fun MainScreen(navController: NavController, itemViewModel: ItemViewModel) {
         Box(modifier = Modifier.padding(innerPadding)){
             when(selectedIndex){
                 0-> HomeScreen(navController, itemViewModel)
-                1-> FavoriteRecipesScreen(itemViewModel)
+                1-> FavoriteRecipesScreen(navController, itemViewModel)
             }
         }
     }

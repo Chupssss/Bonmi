@@ -23,6 +23,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -41,26 +42,23 @@ import com.example.smartcook.screens.navigation.Screen
 @Composable
 fun ImagePickerScreen(navController: NavController, model: ImagePickerViewModel = viewModel()){
     val context = LocalContext.current
-    var selectedImageUri by remember { mutableStateOf<Uri?>(null) }
-    var selectedImageBitmap by remember { mutableStateOf<Bitmap?>(null) }
+    val selectedImageBitmap by model.selectedImage.collectAsState()
+
 
     val galleryLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
     ) { uri: Uri? ->
-        selectedImageUri = uri
         uri?.let {
             val bitmap = MediaStore.Images.Media.getBitmap(context.contentResolver, it)
-            selectedImageBitmap = bitmap
+            model.setSelectedImage(bitmap)
         }
     }
 
     val cameraLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.TakePicturePreview()
     ) { bitmap: Bitmap? ->
-        selectedImageBitmap = bitmap
-        if (bitmap != null) {
-            model.setSelectedImage(bitmap)
-            navController.navigate(Screen.ImagePicker.route)
+        bitmap?.let {
+            model.setSelectedImage(it)
         }
     }
 
