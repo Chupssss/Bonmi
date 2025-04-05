@@ -110,7 +110,7 @@ fun ImagePickerScreen(navController: NavController, model: ImagePickerViewModel 
                         url = "http://78.107.235.156:8000/upload", // Заменить на нужный
                         onSuccess = { result ->
                             println("Успешно: $result")
-                            navController.navigate(Screen.Home.route)
+                            navController.navigate(Screen.Main.route)
                         },
                         onError = { error ->
                             println("Ошибка: ${error.message}")

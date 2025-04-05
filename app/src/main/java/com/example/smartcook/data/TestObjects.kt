@@ -1,3 +1,4 @@
+/*
 package com.example.smartcook.data
 
 import com.example.smartcook.R
@@ -37,4 +38,4 @@ object TestObjects {
                 "\t5.\tСложите омлет пополам, доведите до готовности.\n" +
                 "\t6.\tПодавайте сразу же.\n"),
     )
-}
+}*/

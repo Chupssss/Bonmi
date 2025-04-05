@@ -17,6 +17,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import coil.compose.rememberAsyncImagePainter
 import com.example.smartcook.data.viewModels.ItemViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -79,7 +80,7 @@ fun FullScreenRecipe(
 
             // Фото блюда
             Image(
-                painter = painterResource(id = recipe.image),
+                painter = rememberAsyncImagePainter(recipe.image),
                 contentDescription = "Фото рецепта",
                 modifier = Modifier
                     .fillMaxWidth()
@@ -112,6 +113,10 @@ fun FullScreenRecipe(
                 text = recipe.fullDescription,
                 fontSize = 16.sp,
                 lineHeight = 22.sp
+            )
+            Text(
+                text = recipe.total,
+                fontSize = 16.sp
             )
         }
     }

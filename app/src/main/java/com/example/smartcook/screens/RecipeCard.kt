@@ -13,6 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.rememberAsyncImagePainter
 import com.example.smartcook.data.RecipePreviewData
 import com.example.smartcook.R
 
@@ -32,7 +33,7 @@ fun RecipeCard(
     ) {
         Column {
             Image(
-                painter = painterResource(id = recipe.image),
+                painter = rememberAsyncImagePainter(recipe.image),
                 contentDescription = null,
                 modifier = Modifier
                     .fillMaxWidth()
