@@ -1,6 +1,8 @@
-package com.example.smartcook.data
+package com.example.smartcook.data.viewModels
 
 import androidx.lifecycle.ViewModel
+import com.example.smartcook.data.RecipePreviewData
+import com.example.smartcook.data.TestObjects
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlin.collections.find

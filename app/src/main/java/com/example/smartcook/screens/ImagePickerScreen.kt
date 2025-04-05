@@ -25,9 +25,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -36,7 +33,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.example.smartcook.data.ImagePickerViewModel
+import com.example.smartcook.data.viewModels.ImagePickerViewModel
 import com.example.smartcook.screens.navigation.Screen
 
 @Composable
@@ -108,10 +105,22 @@ fun ImagePickerScreen(navController: NavController, model: ImagePickerViewModel 
                 Text("Назад")
             }
             Button(
-                onClick = { model.setSelectedImage(selectedImageBitmap) },
-                modifier = Modifier.weight(1f)
+                onClick = {
+                    model.uploadSelectedImage(
+                        url = "http://78.107.235.156:8000/upload", // Заменить на нужный
+                        onSuccess = { result ->
+                            println("Успешно: $result")
+                            navController.navigate(Screen.Home.route)
+                        },
+                        onError = { error ->
+                            println("Ошибка: ${error.message}")
+                        }
+                    )
+                },
+                modifier = Modifier.weight(1f),
+                enabled = selectedImageBitmap != null
             ) {
-                Text("Добавить")
+                Text("Далее")
             }
         }
     }
