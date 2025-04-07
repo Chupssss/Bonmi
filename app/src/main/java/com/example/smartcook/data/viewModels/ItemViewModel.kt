@@ -61,8 +61,12 @@ class ItemViewModel : ViewModel() {
                         sDescription = dto.description,
                         fullDescription = dto.instructions,
                         ingredients = dto.ingredients,
-                        total = dto.total_calories,
                         image = dto.path_recipe,
+                        carbohydrates = dto.total_carbohydrates,
+                        time = dto.time,
+                        fats = dto.total_fats,
+                        proteins = dto.total_proteins,
+                        calories = dto.total_calories
                     )
                 }
 
@@ -90,5 +94,10 @@ data class RecipeDTO(
     val instructions: String,
     val description: String,
     val path_recipe: String,
-    val total_calories: String,
+    val time: String?,
+    val total_calories: Float,
+    val total_proteins: String,
+    val total_fats: String,
+    val total_carbohydrates: String,
+
 )

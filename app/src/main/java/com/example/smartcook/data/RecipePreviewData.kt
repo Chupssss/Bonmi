@@ -5,12 +5,12 @@ data class RecipePreviewData(
     val title: String,
     val image: String = "",
     var favorite: Boolean = false,
-    val time: String = "30 минут",
+    val time: String?,
     val sDescription: String,
     val fullDescription: String,
     val ingredients: List<String> = emptyList(),
-    val total: String,
-    /*val protein: String,
+    val calories: Float,
+    val proteins: String,
     val fats: String,
-    val carbohydartes: String,*/
+    val carbohydrates: String,
 )
