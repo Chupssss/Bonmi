@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material3.Text
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -23,10 +24,12 @@ import com.example.smartcook.ui.theme.SmartCookTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val itemViewModel = ViewModelProvider(this)[ItemViewModel::class.java]
+        itemViewModel.loadRecipesFromServer(applicationContext)
         setContent {
             SmartCookTheme {
                 val navController = rememberNavController()
-                val itemViewModel: ItemViewModel = viewModel()
+
 
                 NavHost(navController = navController, startDestination = Screen.Main.route) {
                     composable(Screen.Main.route) {

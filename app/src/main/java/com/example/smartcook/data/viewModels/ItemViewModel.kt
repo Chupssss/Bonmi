@@ -1,5 +1,6 @@
 package com.example.smartcook.data.viewModels
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.smartcook.data.RecipePreviewData
@@ -13,20 +14,39 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import java.io.File
 
 class ItemViewModel : ViewModel() {
 
     private val _recipes = MutableStateFlow<List<RecipePreviewData>>(emptyList())
     val recipes: StateFlow<List<RecipePreviewData>> = _recipes
+    private val favoritesFileName = "favorites.json"
 
-    init {
-        loadRecipesFromServer()
-    }
 
-    fun toggleFavorite(item: RecipePreviewData) {
+    fun toggleFavorite(item: RecipePreviewData, context: Context) {
         _recipes.value = _recipes.value.map {
             if (it.id == item.id) it.copy(favorite = !it.favorite) else it
+        }
+        saveFavoriteIds(context)
+    }
+
+    private fun saveFavoriteIds(context: Context) {
+        val ids = _recipes.value.filter { it.favorite }.map { it.id }
+        val json = Json.encodeToString(ids)
+        File(context.filesDir, favoritesFileName).writeText(json)
+        println("Сохраняю избранные id: $ids")
+    }
+
+    private fun loadFavoriteIds(context: Context): List<Int> {
+        val file = File(context.filesDir, favoritesFileName)
+        if (!file.exists()) return emptyList()
+        return try {
+            val json = file.readText()
+            Json.decodeFromString(json)
+        } catch (e: Exception) {
+            emptyList()
         }
     }
 
@@ -34,14 +54,8 @@ class ItemViewModel : ViewModel() {
         return recipes.value.find { it.id == id }
     }
 
-    fun toggleFavorite(id: Int) {
-        _recipes.value = _recipes.value.map { recipe ->
-            if (recipe.id == id) recipe.copy(favorite = !recipe.favorite) else recipe
-        }
-    }
 
-
-    private fun loadRecipesFromServer(url: String = "http://78.107.235.156:8000/recipes") {
+    fun loadRecipesFromServer( context: Context, url: String = "http://78.107.235.156:8000/recipes") {
         viewModelScope.launch {
             val client = HttpClient(OkHttp) {
                 install(ContentNegotiation) {
@@ -66,7 +80,8 @@ class ItemViewModel : ViewModel() {
                         time = dto.time,
                         fats = dto.total_fats,
                         proteins = dto.total_proteins,
-                        calories = dto.total_calories
+                        calories = dto.total_calories,
+                        favorite = dto.id in loadFavoriteIds(context)
                     )
                 }
 
