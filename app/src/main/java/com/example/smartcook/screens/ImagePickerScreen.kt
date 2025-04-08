@@ -37,7 +37,7 @@ import com.example.smartcook.data.viewModels.ImagePickerViewModel
 import com.example.smartcook.screens.navigation.Screen
 
 @Composable
-fun ImagePickerScreen(navController: NavController, model: ImagePickerViewModel = viewModel()){
+fun ImagePickerScreen(navController: NavController, model: ImagePickerViewModel){
     val context = LocalContext.current
     val selectedImageBitmap by model.selectedImage.collectAsState()
 
@@ -106,11 +106,12 @@ fun ImagePickerScreen(navController: NavController, model: ImagePickerViewModel 
             }
             Button(
                 onClick = {
+
                     model.uploadSelectedImage(
-                        url = "http://78.107.235.156:8000/upload", // Заменить на нужный
-                        onSuccess = { result ->
-                            println("Успешно: $result")
-                            navController.navigate(Screen.Main.route)
+                        context = context,
+                        url = "http://78.107.235.156:8000/upload",
+                        onSuccess = {
+                            navController.navigate(Screen.RecipesFromPhoto.route)
                         },
                         onError = { error ->
                             println("Ошибка: ${error.message}")
