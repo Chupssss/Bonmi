@@ -10,13 +10,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.smartcook.data.RecipePreviewData
 import com.example.smartcook.data.viewModels.ImagePickerViewModel
 import com.example.smartcook.data.viewModels.ItemViewModel
 import com.example.smartcook.screens.FavoriteRecipesScreen
@@ -33,6 +33,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         val itemViewModel = ViewModelProvider(this)[ItemViewModel::class.java]
         val imagePickerViewModel = ViewModelProvider(this)[ImagePickerViewModel::class.java]
+
         itemViewModel.loadRecipesFromServer(applicationContext)
         setContent {
             SmartCookTheme {
@@ -75,6 +76,7 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+
     @Composable
     fun RecipeFromPhotoEntryPoint(
         navController: NavController,
@@ -83,13 +85,20 @@ class MainActivity : ComponentActivity() {
         context: Context
     ) {
         val recipes by imagePickerViewModel.resultRecipes.collectAsState()
+        val isLoading by imagePickerViewModel.isLoading.collectAsState()
 
         println("🔁 Кол-во рецептов: ${recipes.size}")
+        println("🌀 entrypoint: isLoading = $isLoading | recipes = ${recipes.size}")
+        println("🔥 uploadSelectedImage | hash: ${this.hashCode()}")
 
         RecipesFromPhotoScreen(
             navController = navController,
             recipes = recipes,
-            onToggleFavorite = { itemViewModel.toggleFavorite(it, context) }
+            isLoading = isLoading,
+            imagePickerViewModel = imagePickerViewModel,
+            itemViewModel = itemViewModel,
+            context = context
         )
     }
 }
+

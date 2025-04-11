@@ -20,4 +20,4 @@ data class RecipeDTO(
     val total_proteins: String,
     val total_fats: String,
     val total_carbohydrates: String,
-    )
+)

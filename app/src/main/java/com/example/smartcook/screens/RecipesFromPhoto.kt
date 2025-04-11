@@ -1,5 +1,6 @@
 package com.example.smartcook.screens
 
+import android.content.Context
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -9,6 +10,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -21,17 +23,20 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.smartcook.components.RecipeListScreen
 import com.example.smartcook.data.RecipePreviewData
+import com.example.smartcook.data.viewModels.ImagePickerViewModel
+import com.example.smartcook.data.viewModels.ItemViewModel
 import com.example.smartcook.screens.navigation.Screen
-import io.ktor.websocket.Frame
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RecipesFromPhotoScreen(
     navController: NavController,
     recipes: List<RecipePreviewData>,
-    onToggleFavorite: (RecipePreviewData) -> Unit
+    isLoading: Boolean,
+    imagePickerViewModel: ImagePickerViewModel,
+    itemViewModel: ItemViewModel,
+    context: Context
 ) {
     Scaffold(
         topBar = {
@@ -50,17 +55,23 @@ fun RecipesFromPhotoScreen(
         }
     ) { paddingValues ->
 
-        if (recipes.isEmpty()) {
+        if (isLoading) {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(paddingValues),
                 contentAlignment = Alignment.Center
             ) {
-                Text(
-                    text = "Ничего не найдено 🙁",
-                    style = MaterialTheme.typography.bodyLarge
-                )
+                CircularProgressIndicator()
+            }
+        } else if (recipes.isEmpty()) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues),
+                contentAlignment = Alignment.Center
+            ) {
+                Text("Ничего не найдено ☹️")
             }
         } else {
             LazyColumn(
@@ -77,7 +88,8 @@ fun RecipesFromPhotoScreen(
                             navController.navigate(Screen.FullRecipe.withId(recipe.id))
                         },
                         onToggleFavorite = {
-                            onToggleFavorite(recipe)
+                            imagePickerViewModel.toggleFavorite(recipe.id)
+                            itemViewModel.toggleFavorite(recipe, context)
                         }
                     )
                 }

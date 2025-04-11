@@ -5,20 +5,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.smartcook.data.RecipePreviewData
 import com.example.smartcook.data.RecipeResponse
-import io.ktor.client.*
-import io.ktor.client.engine.okhttp.*
-import io.ktor.client.plugins.contentnegotiation.*
-import io.ktor.client.request.*
+import io.ktor.client.HttpClient
+import io.ktor.client.engine.okhttp.OkHttp
+import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.client.request.get
 import io.ktor.client.statement.bodyAsText
-import io.ktor.serialization.kotlinx.json.*
+import io.ktor.serialization.kotlinx.json.json
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import kotlinx.serialization.Serializable
-import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import com.example.smartcook.data.viewModels.loadFavoriteIds
-import com.example.smartcook.data.viewModels.saveFavoriteIds
 
 
 class ItemViewModel : ViewModel() {
@@ -29,7 +25,10 @@ class ItemViewModel : ViewModel() {
     /**
      * Загружает рецепты с сервера и проставляет флаги избранного
      */
-    fun loadRecipesFromServer(context: Context, url: String = "http://78.107.235.156:8000/recipes") {
+    fun loadRecipesFromServer(
+        context: Context,
+        url: String = "http://78.107.235.156:8000/recipes"
+    ) {
         viewModelScope.launch {
             val client = HttpClient(OkHttp) {
                 install(ContentNegotiation) {
@@ -67,6 +66,7 @@ class ItemViewModel : ViewModel() {
             }
         }
     }
+
     /**
      * Переключает статус избранного рецепта и сохраняет результат в файл
      */

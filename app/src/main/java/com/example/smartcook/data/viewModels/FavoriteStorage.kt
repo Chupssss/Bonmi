@@ -6,6 +6,7 @@ import kotlinx.serialization.json.Json
 import java.io.File
 
 private const val favoritesFileName = "favorites.json"
+
 // * Загружает список ID избранных рецептов с устройства
 fun loadFavoriteIds(context: Context): List<Int> {
     val file = File(context.filesDir, favoritesFileName)

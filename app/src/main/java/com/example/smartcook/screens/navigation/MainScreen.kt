@@ -21,8 +21,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.smartcook.R
-import com.example.smartcook.data.viewModels.ItemViewModel
 import com.example.smartcook.data.NavItem
+import com.example.smartcook.data.viewModels.ItemViewModel
 import com.example.smartcook.screens.FavoriteRecipesScreen
 import com.example.smartcook.screens.HomeScreen
 
@@ -32,44 +32,54 @@ import com.example.smartcook.screens.HomeScreen
 fun MainScreen(navController: NavController, itemViewModel: ItemViewModel) {
 
     val NavItemsList = listOf(
-         NavItem("Поиск", R.drawable.home_24px),
-         NavItem("Избранные", R.drawable.favorite_24px)
+        NavItem("Поиск", R.drawable.home_24px),
+        NavItem("Избранные", R.drawable.favorite_24px)
     )
 
     var selectedIndex by remember {
         mutableStateOf(0)
     }
 
-    Scaffold (
+    Scaffold(
         Modifier.fillMaxSize(),
         floatingActionButton = {
-            FloatingActionButton(onClick = { navController.navigate(Screen.ImagePicker.route) },modifier = Modifier
-                .padding(10.dp)) {
-                Icon(painter = painterResource(id = R.drawable.photo_camera_24px), contentDescription = null)
+            FloatingActionButton(
+                onClick = { navController.navigate(Screen.ImagePicker.route) }, modifier = Modifier
+                    .padding(10.dp)
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.photo_camera_24px),
+                    contentDescription = null
+                )
             }
         },
         bottomBar = {
             NavigationBar {
-                NavItemsList.forEachIndexed { index, navItem -> NavigationBarItem(
-                    selected = selectedIndex == index,
-                    onClick = {
-                              selectedIndex = index
-                    },
-                    icon = { 
-                           Icon(painter = painterResource(id = navItem.icon), contentDescription = "Icon")
-                    },
-                    label = { Text(text = navItem.label)}) }
+                NavItemsList.forEachIndexed { index, navItem ->
+                    NavigationBarItem(
+                        selected = selectedIndex == index,
+                        onClick = {
+                            selectedIndex = index
+                        },
+                        icon = {
+                            Icon(
+                                painter = painterResource(id = navItem.icon),
+                                contentDescription = "Icon"
+                            )
+                        },
+                        label = { Text(text = navItem.label) })
+                }
                 /*FloatingActionButton(onClick = { navController.navigate("imagePicker") },modifier = Modifier
                     .padding(10.dp)) {
                     Icon(painter = painterResource(id = R.drawable.photo_camera_24px), contentDescription = null)
                 }*/
             }
         }
-        ) { innerPadding ->
-        Box(modifier = Modifier.padding(innerPadding)){
-            when(selectedIndex){
-                0-> HomeScreen(navController, itemViewModel)
-                1-> FavoriteRecipesScreen(navController, itemViewModel)
+    ) { innerPadding ->
+        Box(modifier = Modifier.padding(innerPadding)) {
+            when (selectedIndex) {
+                0 -> HomeScreen(navController, itemViewModel)
+                1 -> FavoriteRecipesScreen(navController, itemViewModel)
             }
         }
     }

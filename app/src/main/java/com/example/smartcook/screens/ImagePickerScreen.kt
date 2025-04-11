@@ -31,13 +31,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.smartcook.data.viewModels.ImagePickerViewModel
 import com.example.smartcook.screens.navigation.Screen
 
 @Composable
-fun ImagePickerScreen(navController: NavController, model: ImagePickerViewModel){
+fun ImagePickerScreen(navController: NavController, model: ImagePickerViewModel) {
     val context = LocalContext.current
     val selectedImageBitmap by model.selectedImage.collectAsState()
 
@@ -106,11 +105,12 @@ fun ImagePickerScreen(navController: NavController, model: ImagePickerViewModel)
             }
             Button(
                 onClick = {
-
                     model.uploadSelectedImage(
+
                         context = context,
                         url = "http://78.107.235.156:8000/upload",
                         onSuccess = {
+                            println("🔥 uploadSelectedImage | hash: ${this.hashCode()}")
                             navController.navigate(Screen.RecipesFromPhoto.route)
                         },
                         onError = { error ->

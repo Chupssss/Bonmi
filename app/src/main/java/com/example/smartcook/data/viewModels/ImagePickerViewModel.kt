@@ -7,13 +7,11 @@ import androidx.lifecycle.viewModelScope
 import com.example.smartcook.data.RecipePreviewData
 import com.example.smartcook.data.RecipeResponse
 import com.example.smartcook.data.uploadImageToServer
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import kotlinx.serialization.Serializable
-import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import java.io.File
 
 class ImagePickerViewModel : ViewModel() {
 
@@ -27,6 +25,9 @@ class ImagePickerViewModel : ViewModel() {
         _selectedImage.value = bitmap
     }
 
+    private val _isLoading = MutableStateFlow(false)
+    val isLoading: StateFlow<Boolean> = _isLoading
+
     /**
      * Загружает фото на сервер и получает рецепты.
      * Устанавливает признак избранного, если ID совпадает с сохранёнными.
@@ -38,6 +39,7 @@ class ImagePickerViewModel : ViewModel() {
         onError: (Throwable) -> Unit
     ) {
         viewModelScope.launch {
+            _isLoading.value = true
             val bitmap = _selectedImage.value
             if (bitmap == null) {
                 onError(IllegalStateException("Изображение не выбрано"))
@@ -76,7 +78,16 @@ class ImagePickerViewModel : ViewModel() {
 
             } catch (e: Exception) {
                 onError(e)
+            }finally {
+                delay(1000)
+                _isLoading.value = false
             }
+        }
+    }
+
+    fun toggleFavorite(recipeId: Int) {
+        _resultRecipes.value = _resultRecipes.value.map {
+            if (it.id == recipeId) it.copy(favorite = !it.favorite) else it
         }
     }
 
