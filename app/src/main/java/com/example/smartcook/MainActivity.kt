@@ -16,7 +16,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.example.smartcook.data.RecipePreviewData
 import com.example.smartcook.data.viewModels.ImagePickerViewModel
 import com.example.smartcook.data.viewModels.ItemViewModel
 import com.example.smartcook.screens.FavoriteRecipesScreen
@@ -36,6 +35,7 @@ class MainActivity : ComponentActivity() {
 
         itemViewModel.loadRecipesFromServer(applicationContext)
         setContent {
+
             SmartCookTheme {
                 val navController = rememberNavController()
 

@@ -53,6 +53,8 @@ android {
 dependencies {
 
     implementation("androidx.navigation:navigation-compose:2.8.7")
+    implementation("app.rive:rive-android:5.0.1")
+    implementation("androidx.startup:startup-runtime:1.1.1")
 
     implementation("io.ktor:ktor-client-okhttp:2.3.2")
     implementation("io.ktor:ktor-client-core:2.3.2")

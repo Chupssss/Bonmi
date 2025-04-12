@@ -105,16 +105,18 @@ fun ImagePickerScreen(navController: NavController, model: ImagePickerViewModel)
             }
             Button(
                 onClick = {
-                    model.uploadSelectedImage(
+                    // Сначала переходим на экран
+                    navController.navigate(Screen.RecipesFromPhoto.route)
 
+                    // Затем запускаем загрузку
+                    model.uploadSelectedImage(
                         context = context,
                         url = "http://78.107.235.156:8000/upload",
                         onSuccess = {
-                            println("🔥 uploadSelectedImage | hash: ${this.hashCode()}")
-                            navController.navigate(Screen.RecipesFromPhoto.route)
+                            println("✅ Загрузка рецептов завершена")
                         },
                         onError = { error ->
-                            println("Ошибка: ${error.message}")
+                            println("❌ Ошибка загрузки: ${error.message}")
                         }
                     )
                 },
