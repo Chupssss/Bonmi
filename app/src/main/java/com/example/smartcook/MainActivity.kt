@@ -22,6 +22,7 @@ import com.example.smartcook.screens.FavoriteRecipesScreen
 import com.example.smartcook.screens.FullScreenRecipe
 import com.example.smartcook.screens.HomeScreen
 import com.example.smartcook.screens.ImagePickerScreen
+import com.example.smartcook.screens.LoadingScreen
 import com.example.smartcook.screens.RecipesFromPhotoScreen
 import com.example.smartcook.screens.navigation.MainScreen
 import com.example.smartcook.screens.navigation.Screen
@@ -40,7 +41,7 @@ class MainActivity : ComponentActivity() {
                 val navController = rememberNavController()
 
 
-                NavHost(navController = navController, startDestination = Screen.Main.route) {
+                NavHost(navController = navController, startDestination = Screen.LoadingScreen.route) {
                     composable(Screen.Main.route) {
                         MainScreen(navController, itemViewModel)
                     }
@@ -52,6 +53,9 @@ class MainActivity : ComponentActivity() {
                     }
                     composable(Screen.ImagePicker.route) {
                         ImagePickerScreen(navController, imagePickerViewModel)
+                    }
+                    composable(Screen.LoadingScreen.route) {
+                        LoadingScreen(navController, itemViewModel)
                     }
                     composable(
                         route = Screen.FullRecipe.route,

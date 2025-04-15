@@ -6,6 +6,7 @@ sealed class Screen(val route: String) {
     object Favorite : Screen("favorite")
     object ImagePicker : Screen("imagePicker")
     object RecipesFromPhoto : Screen("recipesFromPhoto")
+    object LoadingScreen: Screen("loading")
     object FullRecipe : Screen("fullRecipe/{recipeId}") {
         fun withId(id: Int) = "fullRecipe/$id"
     }
