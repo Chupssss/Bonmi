@@ -16,7 +16,7 @@ fun RiveLoadingAnimation(modifier: Modifier = Modifier) {
         factory = {
             Rive.init(context)
             RiveAnimationView(context).apply {
-                setRiveResource(R.raw.loading_animation)
+                setRiveResource(R.raw.loading_animation_no_background)
                 play()
             }
         },
