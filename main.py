@@ -16,7 +16,7 @@ app.mount("/images", StaticFiles(directory="images"), name="images")
 model = YOLO("best.pt")
 
 
-BASE_URL = "http://78.107.235.156:8000"
+BASE_URL = "http://185.5.249.252:8000"
 DB_PATH = "project_new.db"
 
 
