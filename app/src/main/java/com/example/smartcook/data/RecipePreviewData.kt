@@ -1,5 +1,8 @@
 package com.example.smartcook.data
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class RecipePreviewData(
     val id: Int,
     val title: String,

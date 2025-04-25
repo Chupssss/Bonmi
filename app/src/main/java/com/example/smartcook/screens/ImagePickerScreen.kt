@@ -111,7 +111,7 @@ fun ImagePickerScreen(navController: NavController, model: ImagePickerViewModel)
                     // Затем запускаем загрузку
                     model.uploadSelectedImage(
                         context = context,
-                        url = "http://78.107.235.156:8000/upload",
+                        url = "http://185.5.249.252:8000/upload",
                         onSuccess = {
                             println("✅ Загрузка рецептов завершена")
                         },

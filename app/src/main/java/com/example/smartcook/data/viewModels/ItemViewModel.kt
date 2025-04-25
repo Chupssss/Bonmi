@@ -3,6 +3,7 @@ package com.example.smartcook.data.viewModels
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.smartcook.data.RecipeCacheManager
 import com.example.smartcook.data.RecipePreviewData
 import com.example.smartcook.data.RecipeResponse
 import io.ktor.client.HttpClient
@@ -22,12 +23,10 @@ class ItemViewModel : ViewModel() {
     private val _recipes = MutableStateFlow<List<RecipePreviewData>>(emptyList())
     val recipes: StateFlow<List<RecipePreviewData>> = _recipes
 
-    /**
-     * Загружает рецепты с сервера и проставляет флаги избранного
-     */
+
     fun loadRecipesFromServer(
         context: Context,
-        url: String = "http://78.107.235.156:8000/recipes"
+        url: String = "http://185.5.249.252:8000/recipes"
     ) {
         viewModelScope.launch {
             val client = HttpClient(OkHttp) {
@@ -39,7 +38,6 @@ class ItemViewModel : ViewModel() {
             try {
                 val responseText = client.get(url).bodyAsText()
                 val parsed = Json.decodeFromString<RecipeResponse>(responseText)
-                val favoriteIds = loadFavoriteIds(context)
 
                 val mapped = parsed.recipes.map { dto ->
                     RecipePreviewData(
@@ -59,8 +57,11 @@ class ItemViewModel : ViewModel() {
                 }
 
                 _recipes.value = mapped
+                RecipeCacheManager.saveRecipes(context, mapped)
             } catch (e: Exception) {
                 println("Ошибка загрузки рецептов: ${e.message}")
+                val cachedRecipes = RecipeCacheManager.loadRecipes(context)
+                _recipes.value = cachedRecipes
             } finally {
                 client.close()
             }
