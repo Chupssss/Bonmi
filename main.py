@@ -9,23 +9,23 @@ import uvicorn
 
 app = FastAPI()
 
-# Статические файлы (фотки)
+
 app.mount("/images", StaticFiles(directory="images"), name="images")
 
-# YOLOv8 модель
+
 model = YOLO("best.pt")
 
-# Конфиг
+
 BASE_URL = "http://78.107.235.156:8000"
 DB_PATH = "project_new.db"
 
 
 def get_ingredient_ids_by_names(detected_en_names):
-    """Из английских названий находит ID продуктов в DB"""
+
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
-    # Фильтрация от None и мусора
+
     safe_names = [name.strip().lower() for name in detected_en_names if isinstance(name, str) and name.strip()]
     if not safe_names:
         conn.close()
@@ -44,7 +44,7 @@ def get_ingredient_ids_by_names(detected_en_names):
 
 
 def get_full_recipe(recipe_id, cursor):
-    """Формирует JSON-объект рецепта по его ID"""
+
     cursor.execute("""
         SELECT name, description, instructions, time,
                total_calories, total_proteins, total_fats, total_carbohydrates,
@@ -58,13 +58,13 @@ def get_full_recipe(recipe_id, cursor):
 
     (name, desc, instr, time, kcal, prot, fat, carb, image, ingredients_str) = r
 
-    # Преобразуем строку ингредиентов в список id
+
     try:
         ingredient_ids = [int(i.strip()) for i in ingredients_str.split() if i.strip().isdigit()]
     except Exception:
         ingredient_ids = []
 
-    # Получаем названия продуктов по id
+
     ingredients = []
     if ingredient_ids:
         placeholders = ",".join(["?"] * len(ingredient_ids))
@@ -91,7 +91,7 @@ def get_full_recipe(recipe_id, cursor):
 
 
 def find_recipes(detected_en_names):
-    """Возвращает рецепты, где >=10% совпадение по продуктам"""
+
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
@@ -129,7 +129,7 @@ def find_recipes(detected_en_names):
 
 @app.post("/upload")
 async def upload_image(file: UploadFile = File(...)):
-    """POST /upload — распознавание изображения и рецепты"""
+
     try:
         image_bytes = await file.read()
         image = Image.open(BytesIO(image_bytes))
@@ -154,7 +154,7 @@ async def upload_image(file: UploadFile = File(...)):
 
 @app.get("/recipes")
 def get_all_recipes():
-    """GET /recipes — все рецепты"""
+
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
