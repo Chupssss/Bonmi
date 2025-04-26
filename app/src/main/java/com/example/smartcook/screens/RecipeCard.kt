@@ -23,11 +23,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -47,14 +42,10 @@ fun RecipeCard(
     onClick: () -> Unit,
     onToggleFavorite: () -> Unit
 ) {
-    var visible by remember { mutableStateOf(false) }
     val haptic = LocalHapticFeedback.current
 
-    LaunchedEffect(Unit) {
-        visible = true
-    }
     AnimatedVisibility(
-        visible = visible,
+        visible = true,
         enter = fadeIn() + slideInVertically(initialOffsetY = { it / 3 }),
         exit = fadeOut()
     ) {

@@ -46,7 +46,6 @@ fun RecipeListScreen(
     val scope = rememberCoroutineScope()
 
     var showSearchBar by remember { mutableStateOf(true) }
-    var showScrollToTop by remember { mutableStateOf(false) }
 
     LaunchedEffect(listState) {
         snapshotFlow { listState.firstVisibleItemScrollOffset }
@@ -54,13 +53,6 @@ fun RecipeListScreen(
                 showSearchBar = offset < 10
             }
     }
-    /*
-        LaunchedEffect(listState) {
-            snapshotFlow { listState.firstVisibleItemIndex }
-                .collect { index ->
-                    showScrollToTop = index > 1
-                }
-        }*/
 
     Column(Modifier.fillMaxSize()) {
 
