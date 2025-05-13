@@ -6,6 +6,8 @@ from io import BytesIO
 from ultralytics import YOLO
 import sqlite3
 import uvicorn
+from pydantic import BaseModel
+from typing import List
 
 app = FastAPI()
 
@@ -129,7 +131,6 @@ def find_recipes(detected_en_names):
 
 @app.post("/upload")
 async def upload_image(file: UploadFile = File(...)):
-
     try:
         image_bytes = await file.read()
         image = Image.open(BytesIO(image_bytes))
@@ -143,13 +144,31 @@ async def upload_image(file: UploadFile = File(...)):
             if name:
                 detected.append(name.strip())
 
-        print("🧠 Обнаружено от YOLO:", detected)
+        print("🧠 YOLO обнаружило:", detected)
 
-        recipes = find_recipes(detected)
-        return JSONResponse(content={"recipes": recipes})
+        # Загружаем все продукты
+        conn = sqlite3.connect(DB_PATH)
+        cursor = conn.cursor()
+        cursor.execute("SELECT id, name, name_en FROM product")
+        all_products = cursor.fetchall()
+        conn.close()
+
+        # Собираем список для ответа
+        ingredient_list = []
+        detected_lower = [d.lower() for d in detected]  # нормализуем для поиска
+        for prod_id, ru_name, en_name in all_products:
+            ingredient_list.append({
+                "id": prod_id,
+                "name": ru_name,
+                "name_en": en_name,
+                "detected": en_name.lower() in detected_lower
+            })
+
+        return JSONResponse(content={"ingredients": ingredient_list})
 
     except Exception as e:
         return JSONResponse(status_code=500, content={"error": str(e)})
+
 
 
 @app.get("/recipes")
@@ -169,6 +188,19 @@ def get_all_recipes():
 
     conn.close()
     return JSONResponse(content={"recipes": all_recipes})
+
+class MatchRequest(BaseModel):
+    ingredients: List[str]
+
+@app.post("/match")
+def match_selected_ingredients(request: MatchRequest):
+    try:
+        selected_ingredients = request.ingredients
+        print("📥 От клиента получили ингредиенты:", selected_ingredients)
+        recipes = find_recipes(selected_ingredients)
+        return JSONResponse(content={"recipes": recipes})
+    except Exception as e:
+        return JSONResponse(status_code=500, content={"error": str(e)})
 
 
 if __name__ == "__main__":
