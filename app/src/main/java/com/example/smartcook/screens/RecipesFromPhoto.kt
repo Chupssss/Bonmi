@@ -1,6 +1,7 @@
 package com.example.smartcook.screens
 
 import android.content.Context
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -44,15 +45,15 @@ fun RecipesFromPhotoScreen(
     itemViewModel: ItemViewModel,
     context: Context
 ) {
+    BackHandler(enabled = true) {
+    }
     Scaffold(
         topBar = {
             TopAppBar(
                 title = { Text("Найденные рецепты", style = MaterialTheme.typography.titleLarge) },
                 navigationIcon = {
                     IconButton(onClick = {
-                        navController.navigate(Screen.Main.route) {
-                            popUpTo(Screen.RecipesFromPhoto.route) { inclusive = true }
-                        }
+                        navController.navigate(Screen.Main.route)
                     }) {
                         Icon(Icons.Default.ArrowBack, contentDescription = "Назад")
                     }

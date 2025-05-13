@@ -1,9 +1,6 @@
 package com.example.smartcook.screens
 
-import android.R
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,7 +17,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -33,7 +29,8 @@ import kotlinx.coroutines.delay
 @Composable
 fun LoadingScreen(
     navController: NavController,
-    itemViewModel: ItemViewModel
+    itemViewModel: ItemViewModel,
+    nextRoute: String
 ) {
     val context = LocalContext.current
     var isLoaded by remember { mutableStateOf(false) }
@@ -46,7 +43,7 @@ fun LoadingScreen(
 
     LaunchedEffect(isLoaded) {
         if (isLoaded) {
-            navController.navigate(Screen.Main.route) {
+            navController.navigate(nextRoute) {
                 popUpTo(Screen.LoadingScreen.route) { this.inclusive = true }
             }
         }

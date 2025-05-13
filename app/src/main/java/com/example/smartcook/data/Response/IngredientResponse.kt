@@ -11,6 +11,6 @@ data class IngredientsResponse(
 data class IngredientDTO(
     val id: Int,
     val name: String,
-    val name_en: String?,
+    val name_en: String,
     var detected: Boolean,
 )

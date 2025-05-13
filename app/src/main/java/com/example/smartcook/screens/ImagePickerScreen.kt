@@ -128,11 +128,21 @@ fun ImagePickerScreen(navController: NavController, model: ImagePickerViewModel)
                     ingredients = model.ingredients.collectAsState().value,
                     onDismiss = { showIngredientsDialog = false },
                     onConfirm = { selectedIngredients ->
+                        showIngredientsDialog = false
+
+                        // Показать экран загрузки (через состояние навигации)
+                        navController.navigate(Screen.LoadingScreen.route)
+
                         model.uploadSelectedIngredients(
                             selectedIngredients = selectedIngredients,
                             context = context,
-                            onSuccess = { navController.navigate(Screen.RecipesFromPhoto.route) },
-                            onError = { /* показать ошибку */ }
+                            onSuccess = {
+                                navController.navigate(Screen.LoadingScreen.withNextRoute(Screen.RecipesFromPhoto.route))
+                            },
+                            onError = { e ->
+                                Log.e("UploadError", "Ошибка при загрузке рецептов", e)
+                                navController.popBackStack() // Убираем загрузку
+                            }
                         )
                     }
                 )

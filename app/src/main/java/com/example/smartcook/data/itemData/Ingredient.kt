@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 data class Ingredient(
     val id: Int,
     val name: String,
-    val name_en: String?,
+    val name_en: String,
     var detected: Boolean,
 
 )

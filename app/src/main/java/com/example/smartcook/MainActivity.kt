@@ -54,8 +54,14 @@ class MainActivity : ComponentActivity() {
                     composable(Screen.ImagePicker.route) {
                         ImagePickerScreen(navController, imagePickerViewModel)
                     }
-                    composable(Screen.LoadingScreen.route) {
-                        LoadingScreen(navController, itemViewModel)
+                    composable(
+                        route = Screen.LoadingScreen.route,
+                        arguments = listOf(navArgument("nextRoute") {
+                            defaultValue = "main"
+                        })
+                    ) { backStackEntry ->
+                        val nextRoute = backStackEntry.arguments?.getString("nextRoute") ?: Screen.Main.route
+                        LoadingScreen(navController, itemViewModel, nextRoute)
                     }
                     composable(
                         route = Screen.FullRecipe.route,
