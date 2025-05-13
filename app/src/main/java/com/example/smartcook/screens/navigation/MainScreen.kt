@@ -21,7 +21,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.smartcook.R
-import com.example.smartcook.data.NavItem
+import com.example.smartcook.data.itemData.NavItem
 import com.example.smartcook.data.viewModels.ItemViewModel
 import com.example.smartcook.screens.FavoriteRecipesScreen
 import com.example.smartcook.screens.HomeScreen

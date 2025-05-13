@@ -28,7 +28,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.smartcook.data.RecipePreviewData
+import com.example.smartcook.data.itemData.RecipePreviewData
 import com.example.smartcook.data.RiveLoadingAnimation
 import com.example.smartcook.data.viewModels.ImagePickerViewModel
 import com.example.smartcook.data.viewModels.ItemViewModel

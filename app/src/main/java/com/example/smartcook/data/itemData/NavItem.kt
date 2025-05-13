@@ -1,5 +1,4 @@
-package com.example.smartcook.data
-
+package com.example.smartcook.data.itemData
 
 data class NavItem(
     val label: String,

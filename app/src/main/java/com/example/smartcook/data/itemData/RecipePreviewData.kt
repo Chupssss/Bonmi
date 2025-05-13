@@ -1,4 +1,4 @@
-package com.example.smartcook.data
+package com.example.smartcook.data.itemData
 
 import kotlinx.serialization.Serializable
 

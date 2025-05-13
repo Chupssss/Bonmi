@@ -4,8 +4,8 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.smartcook.data.RecipeCacheManager
-import com.example.smartcook.data.RecipePreviewData
-import com.example.smartcook.data.RecipeResponse
+import com.example.smartcook.data.itemData.RecipePreviewData
+import com.example.smartcook.data.Response.RecipeResponse
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.okhttp.OkHttp
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
@@ -26,7 +26,7 @@ class ItemViewModel : ViewModel() {
 
     fun loadRecipesFromServer(
         context: Context,
-        url: String = "http://185.5.249.252:8000/recipes"
+        url: String = "http://78.107.235.156:8000/recipes"
     ) {
         viewModelScope.launch {
             val client = HttpClient(OkHttp) {

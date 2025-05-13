@@ -6,7 +6,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
 import com.example.smartcook.components.RecipeListScreen
-import com.example.smartcook.data.RecipePreviewData
+import com.example.smartcook.data.itemData.RecipePreviewData
 import com.example.smartcook.data.viewModels.ItemViewModel
 import com.example.smartcook.screens.navigation.Screen
 

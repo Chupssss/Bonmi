@@ -4,16 +4,21 @@ import android.content.Context
 import android.graphics.Bitmap
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.smartcook.data.RecipePreviewData
-import com.example.smartcook.data.RecipeResponse
+import com.example.smartcook.data.itemData.Ingredient
+import com.example.smartcook.data.itemData.RecipePreviewData
+import com.example.smartcook.data.Response.IngredientsResponse
+import com.example.smartcook.data.Response.RecipeResponse
 import com.example.smartcook.data.uploadImageToServer
-import kotlinx.coroutines.delay
+import com.example.smartcook.data.uploadIngredientsToServer
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
 
 class ImagePickerViewModel : ViewModel() {
+
+    private val _ingredients = MutableStateFlow<List<Ingredient>>(emptyList())
+    val ingredients: StateFlow<List<Ingredient>> = _ingredients
 
     private val _selectedImage = MutableStateFlow<Bitmap?>(null)
     val selectedImage: StateFlow<Bitmap?> = _selectedImage
@@ -28,11 +33,17 @@ class ImagePickerViewModel : ViewModel() {
     private val _isLoading = MutableStateFlow(false)
     val isLoading: StateFlow<Boolean> = _isLoading
 
+    fun toggleFavorite(id: Int) {
+        _resultRecipes.value = _resultRecipes.value.map {
+            if (it.id == id) it.copy(favorite = !it.favorite) else it
+        }
+    }
+
     /**
      * Загружает фото на сервер и получает рецепты.
      * Устанавливает признак избранного, если ID совпадает с сохранёнными .
      */
-    fun uploadSelectedImage(
+    fun uploadPhotoAndGetIngredients(
         context: Context,
         url: String,
         onSuccess: () -> Unit,
@@ -40,55 +51,71 @@ class ImagePickerViewModel : ViewModel() {
     ) {
         viewModelScope.launch {
             _isLoading.value = true
-            val bitmap = _selectedImage.value
-            if (bitmap == null) {
-                onError(IllegalStateException("Изображение не выбрано"))
-                return@launch
-            }
-
             try {
+                val bitmap = _selectedImage.value
+                if (bitmap == null) {
+                    onError(IllegalStateException("Изображение не выбрано"))
+                    _isLoading.value = false
+                    return@launch
+                }
+
                 val response = uploadImageToServer(bitmap, url)
-                val parsed = Json { ignoreUnknownKeys = true }
-                    .decodeFromString<RecipeResponse>(response)
+                val parsed = Json.decodeFromString<IngredientsResponse>(response)
 
-                val favoriteIds = loadFavoriteIds(context)
-
-                val mapped = parsed.recipes.map { dto ->
-                    RecipePreviewData(
+                _ingredients.value = parsed.ingredients.map { dto ->
+                    Ingredient(
                         id = dto.id,
-                        title = dto.name,
-                        sDescription = dto.description,
-                        fullDescription = dto.instructions,
-                        ingredients = dto.ingredients,
-                        image = dto.path_recipe,
-                        carbohydrates = dto.total_carbohydrates,
-                        time = dto.time,
-                        fats = dto.total_fats,
-                        proteins = dto.total_proteins,
-                        calories = dto.total_calories,
-                        favorite = dto.id in loadFavoriteIds(context)
+                        name = dto.name,
+                        name_en = dto.name_en,
+                        detected = dto.detected,
+
                     )
                 }
-                println("Загружено рецептов с фото: ${mapped.size}")
-                mapped.forEach {
-                    println("Рецепт: ${it.id} | ${it.title} | ${it.ingredients}")
-                }
-                _resultRecipes.value = mapped
-                onSuccess()
 
+                onSuccess()
             } catch (e: Exception) {
                 onError(e)
-            }finally {
-                delay(1000)
+            } finally {
                 _isLoading.value = false
             }
         }
     }
 
-    fun toggleFavorite(recipeId: Int) {
-        _resultRecipes.value = _resultRecipes.value.map {
-            if (it.id == recipeId) it.copy(favorite = !it.favorite) else it
+    fun uploadSelectedIngredients(
+        selectedIngredients: List<String>,
+        context: Context,
+        onSuccess: () -> Unit,
+        onError: (Throwable) -> Unit
+    ) {
+        viewModelScope.launch {
+            _isLoading.value = true
+            try {
+                val response =
+                    uploadIngredientsToServer(selectedIngredients, "http://78.107.235.156:8000/match")
+                val parsed = Json.decodeFromString<RecipeResponse>(response)
+
+                _resultRecipes.value = parsed.recipes.map { dto ->
+                    RecipePreviewData(
+                        id = dto.id,
+                        title = dto.name,
+                        image = dto.path_recipe,
+                        sDescription = dto.description,
+                        fullDescription = dto.instructions,
+                        ingredients = dto.ingredients,
+                        calories = dto.total_calories,
+                        proteins = dto.total_proteins,
+                        fats = dto.total_fats,
+                        carbohydrates = dto.total_carbohydrates,
+                        time = dto.time,
+                        favorite = false
+                    )
+                }
+                onSuccess()
+            } catch (e: Exception) {
+                onError(e)
+            } finally {
+                _isLoading.value = false
+            }
         }
     }
-
 }

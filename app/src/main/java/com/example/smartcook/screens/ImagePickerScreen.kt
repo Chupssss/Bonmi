@@ -3,6 +3,7 @@ package com.example.smartcook.screens
 import android.graphics.Bitmap
 import android.net.Uri
 import android.provider.MediaStore
+import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.result.launch
@@ -25,6 +26,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -39,6 +43,7 @@ import com.example.smartcook.screens.navigation.Screen
 fun ImagePickerScreen(navController: NavController, model: ImagePickerViewModel) {
     val context = LocalContext.current
     val selectedImageBitmap by model.selectedImage.collectAsState()
+    var showIngredientsDialog by remember { mutableStateOf(false) }
 
 
     val galleryLauncher = rememberLauncherForActivityResult(
@@ -105,25 +110,32 @@ fun ImagePickerScreen(navController: NavController, model: ImagePickerViewModel)
             }
             Button(
                 onClick = {
-                    // Сначала переходим на экран
-                    navController.navigate(Screen.RecipesFromPhoto.route)
-
-                    // Затем запускаем загрузку
-                    model.uploadSelectedImage(
+                    model.uploadPhotoAndGetIngredients(
                         context = context,
-                        url = "http://185.5.249.252:8000/upload",
-                        onSuccess = {
-                            println("✅ Загрузка рецептов завершена")
-                        },
-                        onError = { error ->
-                            println("❌ Ошибка загрузки: ${error.message}")
-                        }
+                        url = "http://78.107.235.156:8000/upload",
+                        onSuccess = { showIngredientsDialog = true
+                            Log.d("Upload", "✅ onSuccess вызван")},
+                        onError = { e -> Log.e("UploadError", "Ошибка при загрузке фото", e) }
                     )
                 },
-                modifier = Modifier.weight(1f),
                 enabled = selectedImageBitmap != null
             ) {
                 Text("Далее")
+            }
+
+            if (showIngredientsDialog) {
+                IngredientsDialog(
+                    ingredients = model.ingredients.collectAsState().value,
+                    onDismiss = { showIngredientsDialog = false },
+                    onConfirm = { selectedIngredients ->
+                        model.uploadSelectedIngredients(
+                            selectedIngredients = selectedIngredients,
+                            context = context,
+                            onSuccess = { navController.navigate(Screen.RecipesFromPhoto.route) },
+                            onError = { /* показать ошибку */ }
+                        )
+                    }
+                )
             }
         }
     }

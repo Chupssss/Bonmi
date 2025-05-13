@@ -27,7 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.smartcook.R
-import com.example.smartcook.data.RecipePreviewData
+import com.example.smartcook.data.itemData.RecipePreviewData
 import com.example.smartcook.screens.RecipeCard
 import kotlinx.coroutines.launch
 
