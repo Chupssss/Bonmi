@@ -8,18 +8,19 @@ import sqlite3
 import uvicorn
 from pydantic import BaseModel
 from typing import List
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+BASE_URL = os.getenv("BASE_URL", "http://localhost:8000")
+DB_PATH = os.getenv("DB_PATH", "project_new.db")
+model = YOLO(os.getenv("MODEL_PATH", "best.pt"))
 
 app = FastAPI()
 
 
 app.mount("/images", StaticFiles(directory="images"), name="images")
-
-
-model = YOLO("best.pt")
-
-
-BASE_URL = "http://78.107.235.156:8000"
-DB_PATH = "project_new.db"
 
 
 def get_ingredient_ids_by_names(detected_en_names):
