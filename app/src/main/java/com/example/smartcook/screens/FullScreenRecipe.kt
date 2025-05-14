@@ -59,7 +59,7 @@ fun FullScreenRecipe(
     val scroll = rememberScrollState()
 
     Scaffold(
-        topBar = { /* Убираем TopAppBar — кнопка будет поверх изображения */ }
+        topBar = { }
     ) { padding ->
 
         Column(
@@ -68,7 +68,6 @@ fun FullScreenRecipe(
                 .verticalScroll(scroll)
         ) {
 
-            // 📸 Блок с изображением и кнопкой назад
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -100,7 +99,6 @@ fun FullScreenRecipe(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // 🧾 Контент в карточке
             Card(
                 modifier = Modifier
                     .padding(16.dp)

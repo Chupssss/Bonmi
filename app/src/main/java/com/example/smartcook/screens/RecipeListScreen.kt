@@ -97,23 +97,5 @@ fun RecipeListScreen(
                 Spacer(modifier = Modifier.height(80.dp)) // под FAB
             }
         }
-
-        /*        if (showScrollToTop) {
-                    Box(
-                        Modifier
-                            .fillMaxSize()
-                            .padding(16.dp),
-                        contentAlignment = Alignment.BottomEnd
-                    ) {
-                        SmallFloatingActionButton(
-                            onClick = { scope.launch { listState.animateScrollToItem(0) } }
-                        ) {
-                            Icon(
-                                painter = painterResource(id = R.drawable.arrow_upward_24px),
-                                contentDescription = null
-                            )
-                        }
-                    }
-                }*/
     }
 }

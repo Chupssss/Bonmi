@@ -9,6 +9,7 @@ sealed class Screen(val route: String) {
     object LoadingScreen : Screen("loading?nextRoute={nextRoute}") {
         fun withNextRoute(nextRoute: String) = "loading?nextRoute=$nextRoute"
     }
+
     object FullRecipe : Screen("fullRecipe/{recipeId}") {
         fun withId(id: Int) = "fullRecipe/$id"
     }

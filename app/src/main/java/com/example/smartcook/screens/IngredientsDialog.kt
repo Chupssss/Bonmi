@@ -27,7 +27,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.example.smartcook.data.itemData.Ingredient
-import io.ktor.websocket.Frame.Text
 
 @Composable
 fun IngredientsDialog(
@@ -35,10 +34,10 @@ fun IngredientsDialog(
     onDismiss: () -> Unit,
     onConfirm: (List<String>) -> Unit
 ) {
-    // 👇 Локально отслеживаем выбранные ингредиенты
     val ingredientStates = remember {
         ingredients.associate { it.id to mutableStateOf(it.detected) }
     }
+    val isAnySelected = ingredientStates.values.any { it.value }
 
     Dialog(onDismissRequest = onDismiss) {
         Surface(
@@ -55,7 +54,6 @@ fun IngredientsDialog(
                     modifier = Modifier.padding(bottom = 8.dp)
                 )
 
-                // Скроллируемая область
                 val scrollState = rememberScrollState()
 
                 Column(
@@ -94,15 +92,19 @@ fun IngredientsDialog(
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     TextButton(onClick = onDismiss) {
-                        Text("Назад")
+                        androidx.compose.material3.Text("Назад")
                     }
                     Spacer(modifier = Modifier.width(8.dp))
-                    Button(onClick = {
-                        val selectedNames = ingredients.filter {
-                            ingredientStates[it.id]?.value == true
-                        }.map { it.name_en }
-                        onConfirm(selectedNames)
-                    }) {
+                    Button(
+                        onClick = {
+                            val selectedNames = ingredients.filter {
+                                ingredientStates[it.id]?.value == true
+                            }.map { it.name_en }
+                            onConfirm(selectedNames)
+                        },
+                        enabled = isAnySelected
+                    )
+                    {
                         androidx.compose.material3.Text("Найти")
                     }
                 }

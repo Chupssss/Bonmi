@@ -104,7 +104,6 @@ fun ImagePickerScreen(navController: NavController, model: ImagePickerViewModel)
         ) {
             Button(
                 onClick = { navController.popBackStack() },
-                modifier = Modifier.weight(1f)
             ) {
                 Text("Назад")
             }
@@ -130,7 +129,6 @@ fun ImagePickerScreen(navController: NavController, model: ImagePickerViewModel)
                     onConfirm = { selectedIngredients ->
                         showIngredientsDialog = false
 
-                        // Показать экран загрузки (через состояние навигации)
                         navController.navigate(Screen.LoadingScreen.route)
 
                         model.uploadSelectedIngredients(
@@ -141,7 +139,7 @@ fun ImagePickerScreen(navController: NavController, model: ImagePickerViewModel)
                             },
                             onError = { e ->
                                 Log.e("UploadError", "Ошибка при загрузке рецептов", e)
-                                navController.popBackStack() // Убираем загрузку
+                                navController.popBackStack()
                             }
                         )
                     }

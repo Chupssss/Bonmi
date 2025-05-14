@@ -7,7 +7,6 @@ import java.io.File
 
 private const val favoritesFileName = "favorites.json"
 
-// * Загружает список ID избранных рецептов с устройства
 fun loadFavoriteIds(context: Context): List<Int> {
     val file = File(context.filesDir, favoritesFileName)
     if (!file.exists()) return emptyList()
@@ -18,7 +17,6 @@ fun loadFavoriteIds(context: Context): List<Int> {
         emptyList()
     }
 }
-//Сохраняет список ID избранных рецептов на устройство
 
 fun saveFavoriteIds(context: Context, ids: List<Int>) {
     val json = Json.encodeToString(ids)

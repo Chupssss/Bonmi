@@ -69,10 +69,6 @@ fun MainScreen(navController: NavController, itemViewModel: ItemViewModel) {
                         },
                         label = { Text(text = navItem.label) })
                 }
-                /*FloatingActionButton(onClick = { navController.navigate("imagePicker") },modifier = Modifier
-                    .padding(10.dp)) {
-                    Icon(painter = painterResource(id = R.drawable.photo_camera_24px), contentDescription = null)
-                }*/
             }
         }
     ) { innerPadding ->

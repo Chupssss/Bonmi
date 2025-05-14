@@ -39,10 +39,6 @@ class ImagePickerViewModel : ViewModel() {
         }
     }
 
-    /**
-     * Загружает фото на сервер и получает рецепты.
-     * Устанавливает признак избранного, если ID совпадает с сохранёнными .
-     */
     fun uploadPhotoAndGetIngredients(
         context: Context,
         url: String,
@@ -69,7 +65,7 @@ class ImagePickerViewModel : ViewModel() {
                         name_en = dto.name_en,
                         detected = dto.detected,
 
-                    )
+                        )
                 }
 
                 onSuccess()
@@ -91,7 +87,10 @@ class ImagePickerViewModel : ViewModel() {
             _isLoading.value = true
             try {
                 val response =
-                    uploadIngredientsToServer(selectedIngredients, "http://78.107.235.156:8000/match")
+                    uploadIngredientsToServer(
+                        selectedIngredients,
+                        "http://78.107.235.156:8000/match"
+                    )
                 val parsed = Json.decodeFromString<RecipeResponse>(response)
 
                 _resultRecipes.value = parsed.recipes.map { dto ->

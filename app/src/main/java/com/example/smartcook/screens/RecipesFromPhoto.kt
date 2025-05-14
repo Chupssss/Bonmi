@@ -29,8 +29,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.smartcook.data.itemData.RecipePreviewData
 import com.example.smartcook.data.RiveLoadingAnimation
+import com.example.smartcook.data.itemData.RecipePreviewData
 import com.example.smartcook.data.viewModels.ImagePickerViewModel
 import com.example.smartcook.data.viewModels.ItemViewModel
 import com.example.smartcook.screens.navigation.Screen
@@ -45,15 +45,17 @@ fun RecipesFromPhotoScreen(
     itemViewModel: ItemViewModel,
     context: Context
 ) {
-    BackHandler(enabled = true) {
-    }
+    BackHandler(enabled = true) {}
+
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Найденные рецепты", style = MaterialTheme.typography.titleLarge) },
+                title = { Text("Найденные рецепты") },
                 navigationIcon = {
                     IconButton(onClick = {
-                        navController.navigate(Screen.Main.route)
+                        navController.navigate(Screen.Main.route) {
+                            popUpTo(Screen.RecipesFromPhoto.route) { inclusive = true }
+                        }
                     }) {
                         Icon(Icons.Default.ArrowBack, contentDescription = "Назад")
                     }
@@ -62,25 +64,7 @@ fun RecipesFromPhotoScreen(
         }
     ) { paddingValues ->
 
-        if (isLoading) {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(32.dp),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-
-                Spacer(modifier = Modifier.height(32.dp))
-                RiveLoadingAnimation(modifier = Modifier.size(360.dp))
-                Spacer(modifier = Modifier.height(24.dp))
-                Text(
-                    text = "Загрузка рецептов...",
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Medium
-                )
-            }
-        } else if (recipes.isEmpty()) {
+        if (recipes.isEmpty()) {
             Box(
                 modifier = Modifier
                     .fillMaxSize()

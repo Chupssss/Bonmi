@@ -4,8 +4,8 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.smartcook.data.RecipeCacheManager
-import com.example.smartcook.data.itemData.RecipePreviewData
 import com.example.smartcook.data.Response.RecipeResponse
+import com.example.smartcook.data.itemData.RecipePreviewData
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.okhttp.OkHttp
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation

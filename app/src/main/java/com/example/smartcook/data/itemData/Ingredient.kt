@@ -9,4 +9,4 @@ data class Ingredient(
     val name_en: String,
     var detected: Boolean,
 
-)
+    )
