@@ -8,8 +8,9 @@ RUN apt-get update && apt-get install -y \
 
 WORKDIR /app
 
-COPY requriments.txt .
-RUN pip install --no-cache-dir -r requriments.txt
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
 
 COPY . .
 

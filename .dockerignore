@@ -1,0 +1,18 @@
+# Скрытые файлы
+.env
+__pycache__/
+*.pyc
+
+# IDE
+.vscode/
+.idea/
+
+# Данные и логи
+logs/
+dataset_work/
+
+# Прочее
+README.md
+*.txt
+deploy.sh
+!requirements.txt
