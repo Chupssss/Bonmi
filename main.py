@@ -147,16 +147,16 @@ async def upload_image(file: UploadFile = File(...)):
 
         print("🧠 YOLO обнаружило:", detected)
 
-        # Загружаем все продукты
+        # Загружаем только ингредиенты с show = 1
         conn = sqlite3.connect(DB_PATH)
         cursor = conn.cursor()
-        cursor.execute("SELECT id, name, name_en FROM product")
+        cursor.execute("SELECT id, name, name_en FROM product WHERE show = 1")
         all_products = cursor.fetchall()
         conn.close()
 
-        # Собираем список для ответа
+        # Составляем финальный список
         ingredient_list = []
-        detected_lower = [d.lower() for d in detected]  # нормализуем для поиска
+        detected_lower = [d.lower() for d in detected]
         for prod_id, ru_name, en_name in all_products:
             ingredient_list.append({
                 "id": prod_id,
