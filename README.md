@@ -86,7 +86,7 @@ yolo task=detect mode=predict model=model/yolov8n.pt source=path/to/image.jpg
     
 - **Егор Канатов** — Frontend (Kotlin)
     
-- **Булат Гибадуллин** — 
+- **Булат Гибадуллин** — Data Engineer / Content Curator (YOLO dataset & recipe DB)
     
 - **Сергей Косыгин** — Тестирование, UX
     
