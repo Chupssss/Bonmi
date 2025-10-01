@@ -71,24 +71,24 @@ yolo task=detect mode=predict model=model/yolov8n.pt source=path/to/image.jpg
     
 - FastAPI
     
-- Kotlin / Android
+- Kotlin
     
 - SQLite + JSON
     
-- Google Colab / Jupyter
+- Google Colab
     
 
 ---
 
 ## 👥 Команда проекта
 
-- **Евгений Папчинский** — Data Scientist, YOLOv8
+- **Евгений Папчинский** — Data Scientist, YOLOv8, Backend, DevOps
     
 - **Егор Канатов** — Frontend (Kotlin)
     
-- **Булат Гибадуллин** — Backend, рецепты
+- **Булат Гибадуллин** — 
     
-- **Сергей Косыгин** — DevOps, тестирование, UX
+- **Сергей Косыгин** — Тестирование, UX
     
 
 ---
