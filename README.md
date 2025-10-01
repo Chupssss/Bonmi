@@ -131,7 +131,7 @@ yolo task=detect mode=predict model=model/best.pt source=path/to/image.jpg
 
 ## 👥 Команда проекта
 
-- **Евгений Папчинский** — Data Scientist, YOLOv8, Backend, DevOps
+- **Евгений Папчинский** — Data Scientist, ML-YOLOv8, Backend, DevOps
     
 - **Егор Канатов** — Android-developer (Kotlin)
     
