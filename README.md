@@ -38,10 +38,11 @@ Bonmi/
 │ ├── main.py
 │ ├── Dockerfile
 │ ├── deploy.sh
-│ ├── project_new.db # База рецептов
-│ └── images/ # Картинки к рецептам
+│ └── project_new.db # База рецептов
 │
-├── models/ # YOLOv8 веса, инференс, ноутбуки
+├── images/ # Картинки к рецептам
+│
+├── models/ # Заглушка (см. README.md)
 │ └── README.md
 │
 └── README.md
