@@ -34,7 +34,7 @@ Bonmi/
 ├── frontend/ # Мобильное приложение (Kotlin)  
 ├── backend/ # API-сервер на FastAPI  
 ├── model/ # YOLOv8 и обработка изображений  
-├── data/ # База рецептов (JSON/CSV)  
+├── images/ # фотографии рецептов (5 фото)
 ├── notebooks/ # Jupyter-ноутбуки для обучения модели  
 └── README.md
 
