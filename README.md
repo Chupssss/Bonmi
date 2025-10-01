@@ -40,7 +40,7 @@ Bonmi/
 │ ├── deploy.sh
 │ └── project_new.db # База рецептов
 │
-├── images/ # Картинки к рецептам
+├── images/ # Пример картинок к рецептам
 │
 ├── models/ # Заглушка (см. README.md)
 │ └── README.md
@@ -53,26 +53,52 @@ Bonmi/
 
 ## 🚀 Быстрый запуск
 
-### Backend (FastAPI)
+### 🐍 Локально (FastAPI)
 
 ```bash
 cd backend
 pip install -r requirements.txt
 uvicorn main:app --reload
-````
+Откроется на http://localhost:8000
 
-### YOLOv8 (распознавание)
+🐳 Через Docker
+Требуется установленный Docker
 
-```bash
+bash
+Копировать код
+cd backend
+docker build -t bonmi-app:latest .
+docker run -d -p 8000:8000 --name bonmi_backend \
+  -v $(pwd)/best.pt:/app/best.pt \
+  --env-file .env \
+  bonmi-app:latest
+⚡ Быстрый запуск через скрипт deploy.sh
+bash
+Копировать код
+cd backend
+chmod +x deploy.sh
+./deploy.sh
+Скрипт:
+
+Удаляет старые контейнеры и образы
+
+Чистит volume и кэш
+
+Собирает backend-образ
+
+Запускает backend-контейнер с моделью и переменными окружения
+
+🤖 YOLOv8
+Установка:
+
+bash
+Копировать код
 pip install ultralytics
-yolo task=detect mode=predict model=model/yolov8n.pt source=path/to/image.jpg
-```
+Пример запуска модели:
 
-### Frontend (Android)
-
-Открыть папку `frontend/` в Android Studio и собрать проект.
-
----
+bash
+Копировать код
+yolo task=detect mode=predict model=model/best.pt source=path/to/image.jpg
 
 ## 🧠 Технологии
 
@@ -85,6 +111,8 @@ yolo task=detect mode=predict model=model/yolov8n.pt source=path/to/image.jpg
 - SQLite + JSON
     
 - Google Colab
+
+- Docker
     
 
 ---
