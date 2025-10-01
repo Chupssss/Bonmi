@@ -30,12 +30,20 @@
 
 ```
 
-Bonmi/  
-├── frontend/ # Мобильное приложение (Kotlin)  
-├── backend/ # API-сервер на FastAPI  
-├── model/ # YOLOv8 и обработка изображений  
-├── images/ # фотографии рецептов (5 фото)
-├── notebooks/ # Jupyter-ноутбуки для обучения модели  
+Bonmi/
+├── app/ # Мобильное приложение (Kotlin)
+│ └── src/...
+│
+├── backend/ # API-сервер (FastAPI)
+│ ├── main.py
+│ ├── Dockerfile
+│ ├── deploy.sh
+│ ├── project_new.db # База рецептов
+│ └── images/ # Картинки к рецептам
+│
+├── models/ # YOLOv8 веса, инференс, ноутбуки
+│ └── README.md
+│
 └── README.md
 
 ````
