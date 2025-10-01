@@ -45,6 +45,9 @@ Bonmi/
 ├── models/ # Заглушка (см. README.md)
 │ └── README.md
 │
+├── nootebooks/ # ноутбук обучение нейросети
+│ └── training_yolo.ipynb
+│
 └── README.md
 
 ````
@@ -117,7 +120,7 @@ yolo task=detect mode=predict model=model/best.pt source=path/to/image.jpg
 Вся логика обучения YOLOv8 реализована в Jupyter-ноутбуке:
 
 ```
-notebooks/yolov8_training.ipynb
+notebooks/training_yolo.ipynb
 ```
 
 Файл предназначен для запуска в Google Colab.
