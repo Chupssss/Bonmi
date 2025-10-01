@@ -43,7 +43,7 @@
 1. Клонировать проект:
    ```bash
    git clone https://github.com/yourname/bonmi.git
-````
+   ```
 
 2. Открыть в Android Studio.
 
