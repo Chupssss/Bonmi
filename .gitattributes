@@ -1,6 +1,3 @@
-# Убираем Jupyter notebook из статистики GitHub языков
 notebooks/* linguist-vendored
 
-# Игнорируем весовые файлы и базы как сгенерированные
-*.pt linguist-generated
 *.db linguist-generated
