@@ -1,18 +1,18 @@
 #!/bin/bash
 
-echo "🧹 Удаляем все контейнеры..."
+echo "Удаление прошлы контейнеров.."
 docker rm -f $(docker ps -aq) 2>/dev/null || true
 
-echo "🧹 Удаляем все образы..."
+echo "Удаление прошлых образов.."
 docker rmi -f $(docker images -aq) 2>/dev/null || true
 
-echo "🧹 Чистим volume и кеш..."
+echo "Очистка.."
 docker system prune -a --volumes -f
 
-echo "🐳 Собираем образ..."
+echo "Сборка образа.."
 docker build -t bonmi-app:latest .
 
-echo "🚀 Запускаем контейнер..."
+echo "Запуск контейнера.."
 docker run -d \
   --name bonmi_backend \
   -p 8000:8000 \
