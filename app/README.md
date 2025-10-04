@@ -110,7 +110,7 @@ val url = "http://<ВАШ_IP>:8000/..."
 ## 👨‍💻 Автор
 
 * Telegram: @no_mana_l
-* GitHub: Egor Kanatov ([https://github.com/yourname](https://github.com/EgorKanatov))
+* GitHub: Egor Kanatov (https://github.com/EgorKanatov)
 
 ---
 
