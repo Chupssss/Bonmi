@@ -26,7 +26,7 @@ class ItemViewModel : ViewModel() {
 
     fun loadRecipesFromServer(
         context: Context,
-        url: String = "http://your.server.ip:8000"
+        url: String = "http://your.server.ip:8000/recipes"
     ) {
         viewModelScope.launch {
             val client = HttpClient(OkHttp) {
