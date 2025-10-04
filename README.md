@@ -40,6 +40,9 @@ Bonmi/
 │ ├── deploy.sh
 │ └── project_new.db # База рецептов
 │
+├── dataset/ # Обучающие и тестовые данные (см. README.md)
+│ └── README.md
+│
 ├── images/ # Пример картинок к рецептам
 │
 ├── models/ # Заглушка (см. README.md)
