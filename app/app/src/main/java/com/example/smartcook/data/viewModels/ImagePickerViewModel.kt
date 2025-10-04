@@ -89,7 +89,7 @@ class ImagePickerViewModel : ViewModel() {
                 val response =
                     uploadIngredientsToServer(
                         selectedIngredients,
-                        "http://78.107.235.156:8000/match"
+                        "http://your.server.ip:8000/match"
                     )
                 val parsed = Json.decodeFromString<RecipeResponse>(response)
 
