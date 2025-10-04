@@ -18,7 +18,7 @@ datasets/
 │ ├── train/  
 │ ├── val/  
 │ └── test/  
-└── labels/  
+├── labels/  
 │ ├── train/  
 │ ├── val/  
 │ └── test/
